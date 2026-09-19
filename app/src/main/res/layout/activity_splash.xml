@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="#F4F6F8">
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="Logo de la aplicación"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/tvTituloSplash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Catálogo de productos"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#172033" />
+
+    <TextView
+        android:id="@+id/tvSubtituloSplash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="Explora productos y conoce sus detalles"
+        android:textSize="16sp"
+        android:textColor="#526071" />
+
+</LinearLayout>
