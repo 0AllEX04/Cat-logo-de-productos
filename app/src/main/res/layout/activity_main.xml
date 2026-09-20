@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Página 1 de 2"
+            android:text="Catálogo"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#172033" />
@@ -68,16 +68,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <include layout="@layout/item_product" />
-
-                <include layout="@layout/item_product" />
-
-                <include layout="@layout/item_product" />
-
-                <include layout="@layout/item_product" />
-
-                <include layout="@layout/item_product" />
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="24dp"
+                    android:gravity="center"
+                    android:text="Pulsa Cargar productos para explorar el catálogo"
+                    android:textColor="#64748B"
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </ScrollView>

@@ -40,5 +40,7 @@ dependencies {
     testImplementation(libs.junit)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
+    implementation(libs.coil)
+    implementation(libs.coil.network.okhttp)
 
 }
