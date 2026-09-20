@@ -2,84 +2,113 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="16dp"
     app:cardBackgroundColor="#FFFFFF"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:strokeColor="#DFE4EA"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="0dp"
+    app:strokeColor="#E2E8F0"
     app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imgProducto"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="190dp"
+            android:background="#EFF6FF"
+            android:padding="20dp"
             android:contentDescription="Imagen del producto"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_launcher" />
+            tools:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/tvNombre"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Laptop de prueba"
-            android:textColor="#172033"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <TextView
-            android:id="@+id/tvDescripcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Laptop para estudiar y realizar trabajos."
-            android:textColor="#526071"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tvCategoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#2563EB"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Categoría: Tecnología" />
 
-        <TextView
-            android:id="@+id/tvPrecio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Precio: $650.00"
-            android:textColor="#172033"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tvNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#0F172A"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:text="Nombre del del producto" />
 
-        <TextView
-            android:id="@+id/tvCategoria"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Categoría: Tecnología"
-            android:textColor="#526071"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tvDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#64748B"
+                android:textSize="14sp"
+                android:lineSpacingExtra="3dp"
+                tools:text="Descripción del producto con sus principales características." />
 
-        <TextView
-            android:id="@+id/tvRating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Rating: ★ 4.5"
-            android:textColor="#526071"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tvPrecio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:textColor="#1D4ED8"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="Precio: $25.00" />
 
-        <TextView
-            android:id="@+id/tvStock"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Stock: 12"
-            android:textColor="#526071"
-            android:textSize="14sp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="12dp"
+                android:background="#F1F5F9" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="#92400E"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="Rating: ★ 4.5" />
+
+                <TextView
+                    android:id="@+id/tvStock"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textColor="#475569"
+                    android:textSize="13sp"
+                    tools:text="Stock: 12" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

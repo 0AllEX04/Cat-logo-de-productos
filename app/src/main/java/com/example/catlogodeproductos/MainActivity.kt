@@ -19,10 +19,17 @@ import com.example.catlogodeproductos.model.Product
 import android.widget.ImageView
 import coil3.load
 import android.widget.ScrollView
+import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
+import android.view.View
 class MainActivity : AppCompatActivity() {
     private var productos: List<Product> = emptyList()
     private var paginaActual = 0
     private val productosPorPagina = 5
+    private val handlerCarga = Handler(Looper.getMainLooper())
+    private var peticionActual: Call<ProductsResponse>? = null
+    private var cargando = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,83 +79,115 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun cargarProductos() {
-        val botonCargar = findViewById<Button>(R.id.btnCargar)
-        botonCargar.isEnabled = false
+        if (cargando) return
 
-        RetrofitClient.api.getProducts().enqueue(
-            object : Callback<ProductsResponse> {
+        cargando = true
+        val inicioCarga = SystemClock.elapsedRealtime()
 
-                override fun onResponse(
-                    call: Call<ProductsResponse>,
-                    response: Response<ProductsResponse>
-                ) {
-                    if (isFinishing || isDestroyed) return
-
-                    botonCargar.isEnabled = true
-
-                    if (!response.isSuccessful) {
-                        Log.e("PRODUCTOS_API", "Error HTTP: ${response.code()}")
-
-                        Toast.makeText(
-                            this@MainActivity,
-                            "No se pudieron cargar los productos. Intenta nuevamente.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return
-                    }
-
-                    val respuesta = response.body()
-
-                    if (respuesta == null || respuesta.products.isEmpty()) {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "No se recibieron productos.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        return
-                    }
-                    productos = respuesta.products
-                    paginaActual = 0
-                    actualizarPagina()
-
-                    Log.d(
-
-                        "PRODUCTOS_API",
-                        "Productos recibidos: ${respuesta.products.size}"
-                    )
-
-                    respuesta.products.forEach { producto ->
-                        Log.d(
-                            "PRODUCTOS_API",
-                            "ID: ${producto.id} | Nombre: ${producto.title}"
-                        )
-                    }
-
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Se recibieron ${respuesta.products.size} productos",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                override fun onFailure(
-                    call: Call<ProductsResponse>,
-                    t: Throwable
-                ) {
-                    if (isFinishing || isDestroyed) return
-
-                    botonCargar.isEnabled = true
-
-                    Log.e("PRODUCTOS_API", "Falló la petición", t)
-
-                    Toast.makeText(
-                        this@MainActivity,
-                        "No se pudieron cargar los productos. Revisa tu conexión e intenta nuevamente.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
+        val contenedor = findViewById<LinearLayout>(
+            R.id.contenedorProductos
         )
+
+        findViewById<View>(R.id.progressBar).visibility = View.VISIBLE
+        findViewById<Button>(R.id.btnCargar).isEnabled = false
+        findViewById<Button>(R.id.btnAnterior).isEnabled = false
+        findViewById<Button>(R.id.btnSiguiente).isEnabled = false
+
+        findViewById<TextView>(R.id.tvCantidad).text =
+            "Cargando productos…"
+
+        contenedor.alpha = 0f
+
+        val peticion = RetrofitClient.api.getProducts()
+        peticionActual = peticion
+
+        peticion.enqueue(object : Callback<ProductsResponse> {
+
+            override fun onResponse(
+                call: Call<ProductsResponse>,
+                response: Response<ProductsResponse>
+            ) {
+                if (isFinishing || isDestroyed) return
+
+                if (!response.isSuccessful) {
+                    Log.e(
+                        "PRODUCTOS_API",
+                        "Error HTTP: ${response.code()}"
+                    )
+                    mostrarErrorCarga(
+                        "No se pudieron cargar los productos. Intenta nuevamente."
+                    )
+                    return
+                }
+
+                val respuesta = response.body()
+
+                if (respuesta == null || respuesta.products.isEmpty()) {
+                    mostrarErrorCarga("No se recibieron productos.")
+                    return
+                }
+
+                Log.d(
+                    "PRODUCTOS_API",
+                    "Productos recibidos: ${respuesta.products.size}"
+                )
+
+                respuesta.products.forEach { producto ->
+                    Log.d(
+                        "PRODUCTOS_API",
+                        "ID: ${producto.id} | Nombre: ${producto.title}"
+                    )
+                }
+
+                val tiempoTranscurrido =
+                    SystemClock.elapsedRealtime() - inicioCarga
+
+                val esperaRestante =
+                    (3_000L - tiempoTranscurrido).coerceAtLeast(0L)
+
+                handlerCarga.postDelayed({
+                    if (!isFinishing && !isDestroyed) {
+                        productos = respuesta.products
+                        paginaActual = 0
+                        actualizarPagina()
+
+                        // actualizarPagina habilita botones:
+                        // los bloqueamos hasta terminar la animación.
+                        findViewById<Button>(
+                            R.id.btnAnterior
+                        ).isEnabled = false
+
+                        findViewById<Button>(
+                            R.id.btnSiguiente
+                        ).isEnabled = false
+
+                        contenedor.animate()
+                            .alpha(1f)
+                            .setDuration(2_000L)
+                            .withEndAction {
+                                if (!isFinishing && !isDestroyed) {
+                                    finalizarCarga()
+                                }
+                            }
+                            .start()
+                    }
+                }, esperaRestante)
+            }
+
+            override fun onFailure(
+                call: Call<ProductsResponse>,
+                t: Throwable
+            ) {
+                if (call.isCanceled || isFinishing || isDestroyed) return
+
+                Log.e("PRODUCTOS_API", "Falló la petición", t)
+
+                mostrarErrorCarga(
+                    "No se pudieron cargar los productos. " +
+                            "Revisa tu conexión e intenta nuevamente."
+                )
+            }
+        })
     }
 
     private fun mostrarProductos(lista: List<Product>) {
@@ -224,5 +263,55 @@ class MainActivity : AppCompatActivity() {
         scroll.post {
             scroll.scrollTo(0, 0)
         }
+    }
+    private fun finalizarCarga() {
+        cargando = false
+        peticionActual = null
+
+        findViewById<View>(R.id.progressBar).visibility = View.GONE
+
+        findViewById<LinearLayout>(
+            R.id.contenedorProductos
+        ).alpha = 1f
+
+        findViewById<Button>(R.id.btnCargar).isEnabled = true
+
+        findViewById<Button>(R.id.btnAnterior).isEnabled =
+            productos.isNotEmpty() && paginaActual > 0
+
+        findViewById<Button>(R.id.btnSiguiente).isEnabled =
+            (paginaActual + 1) * productosPorPagina < productos.size
+    }
+
+    private fun mostrarErrorCarga(mensaje: String) {
+        finalizarCarga()
+
+        val cantidadVisible = productos
+            .drop(paginaActual * productosPorPagina)
+            .take(productosPorPagina)
+            .size
+
+        findViewById<TextView>(R.id.tvCantidad).text =
+            if (productos.isEmpty()) {
+                "Sin productos cargados"
+            } else {
+                "Mostrando $cantidadVisible productos"
+            }
+
+        Toast.makeText(
+            this,
+            mensaje,
+            Toast.LENGTH_LONG
+        ).show()
+    }
+    override fun onDestroy() {
+        handlerCarga.removeCallbacksAndMessages(null)
+        peticionActual?.cancel()
+
+        findViewById<LinearLayout>(
+            R.id.contenedorProductos
+        ).animate().cancel()
+
+        super.onDestroy()
     }
 }

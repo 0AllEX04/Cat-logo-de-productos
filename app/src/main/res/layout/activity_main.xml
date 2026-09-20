@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F4F6F8">
+    android:background="#F8FAFC">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Catálogo de productos"
-            android:textSize="26sp"
+            android:text="MI TIENDA"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="#172033" />
+            android:letterSpacing="0.2"
+            android:textColor="#2563EB" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Explora el catálogo"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#0F172A" />
 
         <TextView
             android:id="@+id/tvPagina"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="Catálogo"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#172033" />
+            android:textColor="#0F172A" />
 
         <TextView
             android:id="@+id/tvCantidad"
@@ -37,22 +48,27 @@
             android:layout_marginTop="4dp"
             android:text="Sin productos cargados"
             android:textSize="14sp"
-            android:textColor="#526071" />
+            android:textColor="#64748B" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCargar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="16dp"
             android:text="Cargar productos"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="@color/boton_catalogo_texto"
+            app:backgroundTint="@color/boton_catalogo_fondo"
+            app:cornerRadius="16dp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
+            android:indeterminateTint="#2563EB"
             android:visibility="gone" />
 
         <ScrollView
@@ -61,13 +77,15 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginTop="12dp"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:clipToPadding="false">
 
             <LinearLayout
                 android:id="@+id/contenedorProductos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,7 +93,9 @@
                     android:gravity="center"
                     android:text="Pulsa Cargar productos para explorar el catálogo"
                     android:textColor="#64748B"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:lineSpacingExtra="4dp" />
+
             </LinearLayout>
 
         </ScrollView>
@@ -83,27 +103,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAnterior"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
                 android:text="Anterior"
                 android:textAllCaps="false"
-                android:enabled="false" />
+                android:enabled="false"
+                android:textColor="@color/boton_catalogo_texto"
+                app:backgroundTint="@color/boton_catalogo_fondo"
+                app:cornerRadius="16dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSiguiente"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="52dp"
                 android:layout_weight="1"
                 android:text="Siguiente"
                 android:textAllCaps="false"
-                android:enabled="false" />
+                android:enabled="false"
+                android:textColor="@color/boton_catalogo_texto"
+                app:backgroundTint="@color/boton_catalogo_fondo"
+                app:cornerRadius="16dp" />
 
         </LinearLayout>
 
