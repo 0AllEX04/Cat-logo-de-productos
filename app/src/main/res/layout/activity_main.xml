@@ -68,56 +68,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <include layout="@layout/item_product" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:background="#FFFFFF"
-                    android:padding="24dp"
-                    android:text="Laptop de prueba\n\nLaptop para estudiar y realizar trabajos.\n\nPrecio: $650.00\nCategoría: Tecnología\nRating: ★ 4.5\nStock: 12"
-                    android:textColor="#172033"
-                    android:textSize="16sp" />
+                <include layout="@layout/item_product" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:background="#FFFFFF"
-                    android:padding="24dp"
-                    android:text="Teclado de prueba\n\nTeclado compacto para uso diario.\n\nPrecio: $25.00\nCategoría: Accesorios\nRating: ★ 4.2\nStock: 30"
-                    android:textColor="#172033"
-                    android:textSize="16sp" />
+                <include layout="@layout/item_product" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:background="#FFFFFF"
-                    android:padding="24dp"
-                    android:text="Audífonos de prueba\n\nAudífonos para escuchar música.\n\nPrecio: $40.00\nCategoría: Audio\nRating: ★ 4.7\nStock: 18"
-                    android:textColor="#172033"
-                    android:textSize="16sp" />
+                <include layout="@layout/item_product" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:background="#FFFFFF"
-                    android:padding="24dp"
-                    android:text="Mochila de prueba\n\nMochila para transportar útiles.\n\nPrecio: $32.00\nCategoría: Accesorios\nRating: ★ 4.3\nStock: 20"
-                    android:textColor="#172033"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:background="#FFFFFF"
-                    android:padding="24dp"
-                    android:text="Lámpara de prueba\n\nLámpara para un escritorio de estudio.\n\nPrecio: $18.00\nCategoría: Hogar\nRating: ★ 4.4\nStock: 15"
-                    android:textColor="#172033"
-                    android:textSize="16sp" />
+                <include layout="@layout/item_product" />
 
             </LinearLayout>
 
